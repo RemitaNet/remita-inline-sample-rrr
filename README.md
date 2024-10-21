@@ -5,7 +5,7 @@
 
 ## Usage
 
-To start using Remita Inline Checkout, refer to the [sample Remita Inline Sample HTML file](remita-inline-sample.html)
+To start using Remita Inline Checkout, refer to the [sample Remita Inline Sample HTML file](index.html.html)
 
 Please replace the 'public key' in the script with your assigned API key, which you can obtain by signing up as an integrator on [remita](https://remita.net).
 

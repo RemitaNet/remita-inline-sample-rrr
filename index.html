@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Remita Checkout Sample<</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+      <style type="text/css">
+         .button {background-color: #1CA78B;  border: none;  color: white;  padding: 15px 32px;  text-align: center;  text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  cursor: pointer;  border-radius: 4px;}
+         input {  max-width: 30%;}
+      </style>
+   </head>
+   <body>
+      <div class="container mt-3">
+         <h2>Remita Checkout Demo- Process RRR</h2>
+         <br>
+         <form onsubmit="makePayment()" id="payment-form">
+            <div class="form-floating mb-3 mt-3">
+               <input type="text" class="form-control" id="js-rrr" name="rrr" placeholder="Enter RRR"/>
+               <label for="rrr">Enter RRR</label>
+            </div>
+            <p><strong>Note:</strong> To generate an RRR to use on this page,</p>
+            <ul>
+               <li><a href= "https://api.remita.net/#ed5722a2-4bf3-40a0-99c5-37f94cb94a55" target="_blank">Click here</a> to utilize our Invoice Generation API, or</li>
+               <li><a href= "https://demo.remita.net/remita/onepage/QATEST/biller.spa" target="_blank">Click here</a> to generate a Bill and go to the 'Bank Branch' Payment option to get the RRR</li>
+            </ul>
+            <input type="button" onclick="makePayment()" value="Submit" button class="button"/>
+         </form>
+      </div>
+      <script type="text/javascript" src="https://demo.remita.net/payment/v1/remita-pay-inline.bundle.js"></script>
+   </body>
+</html>
+
+<script>         
+  function makePayment() {
+  var form = document.querySelector("#payment-form");
+  var paymentEngine = RmPaymentEngine.init({
+  key:"QzAwMDAyNzEyNTl8MTEwNjE4NjF8OWZjOWYwNmMyZDk3MDRhYWM3YThiOThlNTNjZTE3ZjYxOTY5NDdmZWE1YzU3NDc0ZjE2ZDZjNTg1YWYxNWY3NWM4ZjMzNzZhNjNhZWZlOWQwNmJhNTFkMjIxYTRiMjYzZDkzNGQ3NTUxNDIxYWNlOGY4ZWEyODY3ZjlhNGUwYTY=",
+  processRrr: true,
+  transactionId: Math.floor(Math.random()*1101233), // Replace with a reference you generated or remove the entire field for us to auto-generate a reference for you. Note that you will be able to check the status of this transaction using this transaction Id
+extendedData: { 
+    customFields: [ 
+       { 
+          name: "rrr", 
+          value: form.querySelector('input[name="rrr"]').value
+       } 
+     ]
+  },
+    onSuccess: function (response) {
+        console.log('callback Successful Response', response);
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://remita.net/");
+		xhr.send();
+    },
+    onError: function (response) {
+        console.log('callback Error Response', response);
+    },
+    onClose: function () {
+        console.log("closed");
+    }
+  });
+ paymentEngine.showPaymentWidget();
+  }
+  window.onload = function () {
+  setDemoData();
+  };
+</script>
